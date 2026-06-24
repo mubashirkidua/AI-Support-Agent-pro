@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE OCEAN TECH ENTERPRISES | 24/7 Intelligent Customer Resolution</title>
+    <meta name="description" content="Automate 70% of your customer support volume with our intelligent AI Agent. Instant resolution on WhatsApp, Email, and Web Chat.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --secondary: #06B6D4;
+            --accent: #F472B6;
+            --background: #000000;
+            --gold: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        }
+        body {
+            background-color: var(--background);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: white;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        .shining-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.05) 0%, transparent 50%);
+            z-index: -2;
+        }
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%; opacity: 0.3;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .text-gradient {
+            background: linear-gradient(to right, #A855F7, #06B6D4, #F472B6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
+        }
+        .bg-gradient-brand { background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #F472B6 100%); }
+        .hero-glow {
+            position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);
+            width: 1000px; height: 1000px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(6, 182, 212, 0.1) 40%, transparent 70%);
+            z-index: -1; filter: blur(60px);
+        }
+        .shining-shadow { box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+        .shining-card { border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .shining-card:hover { border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 0 30px rgba(139, 92, 246, 0.2); background: rgba(255, 255, 255, 0.05); transform: translateY(-10px); }
+        .form-input { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white; transition: all 0.3s ease; }
+        .step-number { background: linear-gradient(135deg, #8B5CF6, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .modal-overlay { opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { transform: scale(1.1); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); width: 100%; height: 100%; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div class="shining-bg"></div>
+    <div id="stars" class="stars-container"></div>
+
+    <!-- Interactive Full-Screen Experience -->
+    <div id="modal-overlay" class="fixed inset-0 modal-overlay overflow-hidden">
+        <div class="relative w-full h-full bg-black modal-content">
+            <div id="modal-glow" class="absolute inset-0 opacity-20 blur-[150px]"></div>
+            <button onclick="closeModal()" class="absolute top-10 right-10 z-[110] text-gray-400 hover:text-white transition-all hover:scale-110 p-4 glass rounded-full border-white/20">
+                <i data-lucide="x" class="w-10 h-10"></i>
+            </button>
+            <div id="modal-body" class="w-full h-full"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-white/5 top-0">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-gradient-brand rounded-lg flex items-center justify-center shining-shadow">
+                    <i data-lucide="bot" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">AI Support Agent <span class="text-indigo-400">Pro</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-gray-300">
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#how-it-works" class="hover:text-white transition-colors">Process</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center">
+                <a href="#contact" class="px-6 py-2.5 rounded-full text-sm font-bold bg-white text-slate-900 hover:bg-gray-100 hover:scale-105 transition-all shadow-lg shadow-white/10">
+                    Book a Demo
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-48 pb-32 px-6">
+        <div class="hero-glow"></div>
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-white/10 text-xs font-bold text-cyan-300 mb-10 shadow-lg shadow-cyan-500/10">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></span>
+                The Future of Automated Customer Experience
+            </div>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-8 leading-[1.1]">
+                Never Keep a <br> <span class="text-gradient">Customer Waiting.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+                Scale your business with an AI Agent that resolves tickets, captures leads, and speaks 50+ languages—instantly, 24/7.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="#contact" class="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-brand font-extrabold text-xl hover:scale-105 transition-all shining-shadow text-center text-white">
+                    Get Started Now
+                </a>
+                <a href="#features" class="w-full sm:w-auto px-10 py-5 rounded-full glass border-white/10 font-extrabold text-xl hover:bg-white/5 transition-all flex items-center justify-center gap-3">
+                    See Features <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Hero AI Illustration/Mockup -->
+        <div class="max-w-6xl mx-auto mt-24 relative px-4 group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <div class="relative glass rounded-[2.5rem] overflow-hidden border-white/10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000" alt="AI Dashboard" class="w-full h-auto opacity-80 mix-blend-screen hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent"></div>
+            </div>
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-violet-500/20 blur-3xl animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section id="features" class="py-32 px-6 bg-slate-900/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="space-y-8 group">
+                    <div class="relative w-full h-48 rounded-3xl overflow-hidden glass border-white/5 group-hover:border-violet-500/30 transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-4 left-6 w-12 h-12 bg-violet-500/20 rounded-xl flex items-center justify-center shining-shadow">
+                            <i data-lucide="zap" class="text-violet-400 w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Instant Resolution</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Stop counting response times in hours. Our AI resolves 70% of support queries in under 10 seconds.</p>
+                    </div>
+                </div>
+                <div class="space-y-8 group">
+                    <div class="relative w-full h-48 rounded-3xl overflow-hidden glass border-white/5 group-hover:border-cyan-500/30 transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-4 left-6 w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center shining-shadow">
+                            <i data-lucide="globe" class="text-cyan-400 w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Multichannel Support</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Deploy one unified brain across WhatsApp, Email, and Live Chat. No more fragmented customer data.</p>
+                    </div>
+                </div>
+                <div class="space-y-8 group">
+                    <div class="relative w-full h-48 rounded-3xl overflow-hidden glass border-white/5 group-hover:border-pink-500/30 transition-all duration-500">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-4 left-6 w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center shining-shadow">
+                            <i data-lucide="trending-up" class="text-pink-400 w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Lead Conversion</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Don't just answer questions. The AI identifies high-intent visitors and books meetings directly into your calendar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="text-4xl md:text-6xl font-extrabold mb-6">Simple Integration. <br> <span class="text-gradient">Powerful Results.</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+                <div class="text-center group cursor-pointer" onclick="openModal('connect')">
+                    <div class="relative w-32 h-32 mx-auto mb-10">
+                        <div class="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl group-hover:bg-violet-500/40 transition-all"></div>
+                        <div class="relative w-full h-full glass rounded-full flex items-center justify-center text-4xl font-black step-number border-violet-500/30">1</div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Connect</h4>
+                    <p class="text-gray-500">Sync your help docs, PDFs, or website URLs in one click.</p>
+                </div>
+                <div class="text-center group cursor-pointer" onclick="openModal('customize')">
+                    <div class="relative w-32 h-32 mx-auto mb-10">
+                        <div class="absolute inset-0 bg-cyan-500/20 rounded-full blur-2xl group-hover:bg-cyan-500/40 transition-all"></div>
+                        <div class="relative w-full h-full glass rounded-full flex items-center justify-center text-4xl font-black step-number border-cyan-500/30">2</div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Customize</h4>
+                    <p class="text-gray-500">Set your brand voice, tone, and specific resolution protocols.</p>
+                </div>
+                <div class="text-center group cursor-pointer" onclick="openModal('deploy')">
+                    <div class="relative w-32 h-32 mx-auto mb-10">
+                        <div class="absolute inset-0 bg-pink-500/20 rounded-full blur-2xl group-hover:bg-pink-500/40 transition-all"></div>
+                        <div class="relative w-full h-full glass rounded-full flex items-center justify-center text-4xl font-black step-number border-pink-500/30">3</div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Deploy</h4>
+                    <p class="text-gray-500">Go live on your site, WhatsApp, and Email instantly.</p>
+                </div>
+                <div class="text-center group cursor-pointer" onclick="openModal('scale')">
+                    <div class="relative w-32 h-32 mx-auto mb-10">
+                        <div class="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl group-hover:bg-violet-500/40 transition-all"></div>
+                        <div class="relative w-full h-full glass rounded-full flex items-center justify-center text-4xl font-black step-number border-violet-500/30">4</div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Scale</h4>
+                    <p class="text-gray-500">Watch your support costs drop and CSAT scores soar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-32 px-6 bg-slate-900/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-extrabold mb-6">Ready to <span class="text-gradient">Scale?</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass p-12 rounded-[2rem] border-white/5 flex flex-col hover:border-violet-500/30 transition-all duration-500">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-gray-400 uppercase tracking-widest mb-2">Growth</h3>
+                        <div class="text-5xl font-black">$199<span class="text-lg font-medium text-gray-500">/mo</span></div>
+                    </div>
+                    <ul class="space-y-5 mb-12 flex-grow">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-violet-400 w-6 h-6"></i> Up to 2,000 Resolutions</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-violet-400 w-6 h-6"></i> Web Chat & Email</li>
+                    </ul>
+                    <a href="#contact" class="w-full py-5 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition-all text-center">Choose Growth</a>
+                </div>
+                <div class="glass p-12 rounded-[2rem] border-cyan-500/50 relative flex flex-col scale-105 shadow-2xl shadow-cyan-500/20">
+                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-brand text-xs font-black px-6 py-2 rounded-full uppercase tracking-widest">Most Popular</div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-cyan-300 uppercase tracking-widest mb-2">Business</h3>
+                        <div class="text-5xl font-black">$499<span class="text-lg font-medium text-gray-500">/mo</span></div>
+                    </div>
+                    <ul class="space-y-5 mb-12 flex-grow">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-cyan-400 w-6 h-6"></i> Up to 10,000 Resolutions</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-cyan-400 w-6 h-6"></i> WhatsApp Integration</li>
+                    </ul>
+                    <a href="#contact" class="w-full py-5 rounded-2xl bg-gradient-brand font-black shadow-lg shadow-indigo-500/30 hover:scale-105 transition-all text-center text-white">Get Started Now</a>
+                </div>
+                <div class="glass p-12 rounded-[2rem] border-white/5 flex flex-col hover:border-pink-500/30 transition-all duration-500">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-gray-400 uppercase tracking-widest mb-2">Enterprise</h3>
+                        <div class="text-5xl font-black">Custom</div>
+                    </div>
+                    <ul class="space-y-5 mb-12 flex-grow">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-pink-400 w-6 h-6"></i> Unlimited Resolutions</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="text-pink-400 w-6 h-6"></i> Custom AI Training</li>
+                    </ul>
+                    <a href="#contact" class="w-full py-5 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition-all text-center">Talk to Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lead Capture Form -->
+    <section id="contact" class="py-32 px-6 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass p-12 md:p-16 rounded-[3rem] border-white/10 relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-violet-600/30 blur-[100px] rounded-full"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-cyan-600/30 blur-[100px] rounded-full"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl md:text-6xl font-black mb-6">Stop Losing <br> <span class="text-gradient">Customers.</span></h2>
+                        <p class="text-gray-400 text-lg">Leave your details below and we'll show you how to automate your support in 10 minutes.</p>
+                    </div>
+                    <form class="grid grid-cols-1 md:grid-cols-2 gap-8" onsubmit="event.preventDefault(); alert('Request received! We will contact you shortly.');">
+                        <div class="flex flex-col gap-3">
+                            <label class="text-sm font-bold text-violet-400 ml-1">Full Name</label>
+                            <input type="text" placeholder="John Doe" class="form-input px-6 py-4 rounded-2xl text-lg" required>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <label class="text-sm font-bold text-cyan-400 ml-1">Work Email</label>
+                            <input type="email" placeholder="john@company.com" class="form-input px-6 py-4 rounded-2xl text-lg" required>
+                        </div>
+                        <div class="flex flex-col gap-3 md:col-span-2">
+                            <label class="text-sm font-bold text-pink-400 ml-1">Website URL</label>
+                            <input type="url" placeholder="https://yourwebsite.com" class="form-input px-6 py-4 rounded-2xl text-lg" required>
+                        </div>
+                        <div class="md:col-span-2 mt-4">
+                            <button type="submit" class="w-full py-6 rounded-2xl bg-gradient-brand text-white font-black text-xl hover:scale-[1.02] transition-all shining-shadow shadow-2xl">
+                                Request a Free Demo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-brand rounded-lg flex items-center justify-center">
+                    <i data-lucide="bot" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-extrabold tracking-tight">THE OCEAN TECH ENTERPRISES</span>
+            </div>
+            <p class="text-gray-600 text-sm font-medium">© 2026 THE OCEAN TECH ENTERPRISES. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const modalData = {
+            'connect': {
+                title: 'Instant Knowledge Sync',
+                desc: 'Upload PDFs, sync help docs, or just point to your URL. Our AI builds its brain in under 60 seconds.',
+                icon: 'database',
+                img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
+                color: '#8B5CF6'
+            },
+            'customize': {
+                title: 'Brand Voice Alignment',
+                desc: 'Set the tone from "Professional" to "Friendly". Define exactly how your AI handles specific customer queries.',
+                icon: 'settings-2',
+                img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200',
+                color: '#06B6D4'
+            },
+            'deploy': {
+                title: 'Multi-Channel Go-Live',
+                desc: 'Activate your agent on WhatsApp, Email, and Web Chat with one click. Your 24/7 support team is now live.',
+                icon: 'send',
+                img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200',
+                color: '#F472B6'
+            },
+            'scale': {
+                title: 'Autonomous Growth',
+                desc: 'Watch your resolution rates hit 70%+. Free your human team for high-value strategy and growth tasks.',
+                icon: 'trending-up',
+                img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
+                color: '#8B5CF6'
+            }
+        };
+
+        function openModal(step) {
+            const data = modalData[step];
+            const modalBody = document.getElementById('modal-body');
+            const modalGlow = document.getElementById('modal-glow');
+            
+            modalBody.innerHTML = `
+                <div class="relative min-h-[500px] flex items-center justify-center text-center px-4 py-16">
+                    <div class="absolute inset-0 rounded-[2rem] overflow-hidden bg-slate-900">
+                        <img src="${data.img}" class="w-full h-full object-cover opacity-60" alt="${data.title}">
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/30 to-black/90"></div>
+                    </div>
+                    <div class="relative z-10 max-w-xl">
+                        <div class="w-24 h-24 bg-black/50 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 border border-white/10 shadow-2xl" style="box-shadow: 0 0 50px ${data.color}40">
+                            <i data-lucide="${data.icon}" class="w-12 h-12" style="color: ${data.color}"></i>
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-black mb-8 text-white tracking-tight drop-shadow-2xl">${data.title}</h2>
+                        <p class="text-white text-xl leading-relaxed mb-12 font-bold drop-shadow-lg bg-black/40 backdrop-blur-md rounded-3xl p-8 border border-white/5">${data.desc}</p>
+                        <button onclick="closeModal()" class="px-14 py-5 rounded-2xl bg-white text-slate-900 font-black text-xl hover:scale-110 shadow-2xl transition-all">
+                            Got it, Proceed
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modalGlow.style.backgroundColor = data.color;
+            document.getElementById('modal-overlay').classList.add('active');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        // Star animation
+        function createStars() {
+            const container = document.getElementById('stars');
+            for(let i=0; i<100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+                container.appendChild(star);
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>
